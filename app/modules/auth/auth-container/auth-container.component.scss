@@ -1,0 +1,9 @@
+@use "../auth-styles.scss";
+
+:host {
+	display: block;
+	height: 100%;
+	::ng-deep {
+		@include auth-styles.auth-text-field-styles;
+	}
+}

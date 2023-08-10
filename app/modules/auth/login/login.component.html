@@ -1,0 +1,57 @@
+<app-auth-screen-template
+	[titleText]="
+		screenStyle === 'regular-screen'
+			? 'Enter your login details'
+			: 'Log in to\ncontinue'
+	"
+	bottomButtonText="Log In"
+	(onBottomButtonPressed)="onTapLogin()"
+	[bottomButtonIsEnabled]="formGroup.valid"
+	[topRightButtonText]="
+		screenStyle === 'regular-screen' ? 'Registration' : null
+	"
+	topRightButtonRouterLink="/auth/registration"
+	[maxImageWidth]="240"
+	bottomButtonLayout="scroll-with-screen"
+>
+	<button
+		*ngIf="screenStyle === 'login-to-continue-popup'"
+		class="top-right-button"
+		(click)="hideLogInToContinueScreen()"
+		appBounceOnClick
+		bounceOnClickScale="small-button"
+	>
+		<svg [outerHTML]="svg.icons.xIcon"></svg>
+	</button>
+	<form #form class="form-auth" (ngSubmit)="onTapLogin()">
+		<mat-form-field *ngIf="formGroup.get('userName') as control">
+			<mat-label>Username</mat-label>
+			<input
+				#inputElement
+				(keyup.enter)="onTapLogin()"
+				matInput
+				type="text"
+				[formControl]="$any(control)"
+				[autofocus]="true"
+			/>
+			<mat-error>
+				{{ control.getErrorMessage() }}
+			</mat-error>
+		</mat-form-field>
+
+		<app-auth-password-field
+			[control]="$any(formGroup.get('password'))"
+			(onEnterKeyPressed)="onTapLogin()"
+		></app-auth-password-field>
+
+		<ng-container *ngIf="screenStyle === 'login-to-continue-popup'">
+			<a class="bottom-link" routerLink="/auth/registration"
+				>Not a member? Create a free account</a
+			>
+		</ng-container>
+
+		<a class="bottom-link" routerLink="/auth/forgot">Forgot password?</a>
+	</form>
+</app-auth-screen-template>
+
+<app-loader *ngIf="isLoading$ | async"></app-loader>

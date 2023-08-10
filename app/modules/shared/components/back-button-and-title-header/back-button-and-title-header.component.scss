@@ -1,0 +1,40 @@
+@use "~src/styles/variables";
+
+:host {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-auto-columns: auto;
+	grid-auto-flow: column;
+	gap: 12px;
+	align-items: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
+
+	> .back-button {
+		> ::ng-deep svg {
+			height: 26px;
+			width: 13px;
+			path {
+				stroke: rgba(black, 0.25);
+			}
+		}
+	}
+
+	> .title-text {
+		font-family: Cera Pro;
+		font-weight: 500;
+		font-size: 50px;
+		color: variables.$main-brown-color;
+		line-height: 52.5px;
+		word-break: break;
+		word-break: break-word;
+	}
+
+	> .replace-text-holder:not(:empty) + .title-text {
+		display: none;
+	}
+
+	> .replace-text-holder:empty {
+		display: none;
+	}
+}

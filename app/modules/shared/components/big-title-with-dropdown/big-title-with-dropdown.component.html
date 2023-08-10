@@ -1,0 +1,11 @@
+<div class="in-text" *ngIf="leftText">{{leftText}}</div>
+<app-main-option-list
+    [control]="control"
+    [options]="options"
+    [getValueForOption]="getValueForOption"
+    [getNameForOption]="getNameForOption"
+    [placeholder]="placeholder"
+    [getEqualityForOptions]="getEqualityForOptions"
+    [isFilteringEnabled]="isFilteringEnabled"
+>
+</app-main-option-list>

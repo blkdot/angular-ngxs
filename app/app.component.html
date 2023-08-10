@@ -1,0 +1,14 @@
+<router-outlet></router-outlet>
+<app-menu-screen *ngIf="shouldShowMenu$ | async" @fadeUp></app-menu-screen>
+<app-login
+	*ngIf="shouldLogInToContinueBeShown$ | async"
+	@fadeUp
+	screenStyle="login-to-continue-popup"
+></app-login>
+
+<app-order-time-passed-popup
+	[descriptionText]="(productUnavailableScreenInfo$ | async)?.descriptionText"
+	[titleText]="(productUnavailableScreenInfo$ | async)?.titleText"
+></app-order-time-passed-popup>
+
+<app-loader *ngIf="isLoading$ | async"></app-loader>

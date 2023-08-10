@@ -1,0 +1,27 @@
+@use 'src/styles/material-themes';
+
+@mixin auth-text-field-styles{
+    
+    font-weight: 400;
+    color: white;
+    
+    ::ng-deep
+    {
+        @include material-themes.angular-material-theme(material-themes.$auth-theme);
+        font-weight: 400;
+        color: white;
+        .country-selector-code{
+            color: white;
+        }
+        .mat-form-field
+        {
+            display: block;
+        }
+
+        .mat-form-field-underline
+        {
+            display: block !important; // prevents underline from disappearing for some random reason 🙄
+        }
+    }
+}
+

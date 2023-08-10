@@ -1,0 +1,30 @@
+
+<div class="root" *ngIf="data">
+  
+  <div class="scrolling-container">
+    <section class="top-text-box">
+      <div class="thanks-title">
+        {{ data.title }}
+      </div>
+      <div class="thanks-description">
+        {{ data.description }}
+      </div>
+    </section>
+    <img [src]="data.image" alt="illustration">
+  </div>
+
+  <footer>
+    <button 
+      appBounceOnClick 
+      bounceOnClickScale="main-button" 
+      class="main-button" 
+      [routerLink]="returnUrl" 
+      *ngIf="data.buttonTitle && returnUrl"
+    >
+      {{ data.buttonTitle }}
+    </button>
+  </footer>
+
+</div>
+
+

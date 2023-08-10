@@ -1,0 +1,26 @@
+<mat-form-field>
+	<mat-label>City</mat-label>
+
+	<input
+		#inputElement
+		(keyup.enter)="onEnterKeyPressed.emit(null)"
+		matInput
+		name="search"
+		type="text"
+		[matAutocomplete]="auto"
+		[formControl]="control"
+	/>
+
+	<mat-autocomplete
+		#auto="matAutocomplete"
+		[displayWith]="changeCitySelection.bind(this)"
+		style="display: none"
+	>
+		<mat-option *ngFor="let city of filteredCities$ | async" [value]="city">
+			{{ city.cityName }}, {{ city.state }}, {{ city.country }}
+		</mat-option>
+	</mat-autocomplete>
+
+	<mat-icon matPrefix>add_location_alt_outline</mat-icon>
+	<mat-error>{{ control.getErrorMessage() }}</mat-error>
+</mat-form-field>

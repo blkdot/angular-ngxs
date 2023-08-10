@@ -1,0 +1,36 @@
+@use "src/styles/variables";
+
+:host {
+	height: 100%;
+
+	display: block;
+
+	> .main-page-content {
+		height: 100%;
+		overflow-y: auto;
+		> form.product-data-form {
+			display: grid;
+			gap: 15px;
+			padding-left: variables.$side-screen-padding;
+			padding-right: variables.$side-screen-padding;
+			padding-bottom: variables.$side-screen-padding;
+
+			::ng-deep app-form-photo-list {
+				margin-top: 10px;
+				margin-bottom: 10px;
+			}
+
+			.main-button {
+				margin-top: 7px;
+			}
+		}
+	}
+	> app-choose-location-screen {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		background-color: white;
+	}
+}

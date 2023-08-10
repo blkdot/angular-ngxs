@@ -1,0 +1,19 @@
+<app-auth-screen-template
+	titleText="Choose your city"
+	[topRightButtonText]="null"
+	bottomButtonText="Next"
+	(onBottomButtonPressed)="guestSignIn()"
+	[bottomButtonIsEnabled]="formGroup.valid"
+	bottomButtonLayout="fixed"
+	[bottomCustomTemplate]="bottomCityInput"
+>
+</app-auth-screen-template>
+
+<ng-template #bottomCityInput>
+	<form #form class="form-auth">
+		<app-auth-city-field
+			(onEnterKeyPressed)="guestSignIn()"
+			[control]="$any(formGroup.get('city'))"
+		></app-auth-city-field>
+	</form>
+</ng-template>

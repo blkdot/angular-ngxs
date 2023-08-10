@@ -1,0 +1,237 @@
+<ng-container *ngIf="formGroup$ | async as form">
+	<div class="main-page-content" *ngIf="templateAsyncValues$ | async as values">
+		<app-edit-header
+			[imageUrl]="
+				values.profile.photos && values.profile.photos.length > 0
+					? (values.profile.photos[0] | s3ImageUrl)
+					: ''
+			"
+			titleText="Edit"
+		>
+		</app-edit-header>
+
+		<form class="product-data-form" [formGroup]="form">
+			<app-form-photo-list
+				[control]="form.getFormControl('photos')"
+				inputTitle="Photos"
+			></app-form-photo-list>
+
+			<app-main-input
+				[control]="form.getFormControl('userName')"
+				inputTitle="Username"
+			></app-main-input>
+			<app-main-input
+				[control]="form.getFormControl('fullName')"
+				inputTitle="Full Name"
+			></app-main-input>
+			<app-main-input
+				[control]="form.getFormControl('displayName')"
+				inputTitle="Display Name"
+			></app-main-input>
+			<app-main-multiline-input
+				[control]="form.getFormControl('profileDescription')"
+				inputTitle="Description"
+			></app-main-multiline-input>
+			<app-main-input
+				[control]="$any(form.get('email'))"
+				inputTitle="Email"
+			></app-main-input>
+			<app-property-info [form]="form" [control]="'phone'" title="Mobile">
+			</app-property-info>
+			<app-main-select-input
+				inputTitle="Gender"
+				[options]="genderOptions"
+				[control]="$any(form.get('gender'))"
+			></app-main-select-input>
+			<app-date-input
+				inputTitle="Birthday"
+				[control]="$any(form.get('birthDate'))"
+				[maxDate]="maximumBirthday"
+				startView="multi-year"
+			></app-date-input>
+
+			<app-main-select-input
+				*ifControlEnabled="
+					form.getFormControl('whoWillManageFulfillment') as control
+				"
+				inputTitle="Who will manage fulfillment"
+				[options]="whoWillManageFulfillmentOptions"
+				[control]="control"
+			>
+			</app-main-select-input>
+
+			<app-main-multi-select-input
+				*ifControlEnabled="form.getFormControl('deliveryOptions') as control"
+				inputTitle="Delivery options"
+				[control]="control"
+				[options]="deliveryOptions"
+			></app-main-multi-select-input>
+
+			<app-main-input
+				*ngIf="form.get('pickupFee').enabled"
+				[control]="$any(form.get('pickupFee'))"
+				inputTitle="Pickup fee"
+			></app-main-input>
+
+			<app-main-multi-select-input
+				*ngIf="form.get('pickupDays').enabled"
+				[options]="dayOfWeekOptions"
+				[control]="$any(form.get('pickupDays'))"
+				inputTitle="Pickup days"
+			></app-main-multi-select-input>
+
+			<app-time-input
+				*ifControlEnabled="form.getFormControl('pickupTimes') as control"
+				[control]="control"
+				inputTitle="Pickup times"
+				[multiple]="true"
+				[timeOptionsConfig]="{
+					increments: 'hour',
+					optionsFormat: 'time-range'
+				}"
+			></app-time-input>
+
+			<app-main-input
+				*ngIf="form.get('deliveryFee').enabled"
+				[control]="$any(form.get('deliveryFee'))"
+				inputTitle="Delivery fee"
+			></app-main-input>
+
+			<app-main-multi-select-input
+				*ngIf="form.get('deliveryDays').enabled"
+				[options]="dayOfWeekOptions"
+				[control]="$any(form.get('deliveryDays'))"
+				inputTitle="Delivery days"
+			></app-main-multi-select-input>
+
+			<app-time-input
+				*ifControlEnabled="form.getFormControl('deliveryTimes') as control"
+				[control]="control"
+				inputTitle="Delivery times"
+				[multiple]="true"
+				[timeOptionsConfig]="{
+					customOptions: deliveryTimesOptions,
+					optionsFormat: 'time-range'
+				}"
+			></app-time-input>
+
+			<app-main-input
+				[control]="form.getFormControl('orderLeadTimeDays')"
+				inputTitle="Order lead time in days"
+			></app-main-input>
+
+			<app-time-input
+				[control]="form.getFormControl('orderCutOffTime')"
+				inputTitle="Order cut off time"
+			></app-time-input>
+
+			<app-select-city-input
+				inputTitle="Home City"
+				[control]="$any(form.get('city'))"
+			></app-select-city-input>
+
+			<app-location-input
+				[formGroup]="form.getChildFormGroup('businessLocation')"
+				inputTitle="Business location"
+				(click)="showSelectLocationScreen = true"
+			></app-location-input>
+
+			<app-main-input
+				inputTitle="Facebook link"
+				[control]="$any(form.get('facebookLink'))"
+			></app-main-input>
+			<app-main-input
+				inputTitle="Instagram link"
+				[control]="$any(form.get('instagramLink'))"
+			></app-main-input>
+			<app-main-input
+				inputTitle="Twitter link"
+				[control]="$any(form.get('twitterLink'))"
+			></app-main-input>
+			<app-main-input
+				*ngIf="values.isSuperUser"
+				[control]="$any(form.get('percent'))"
+				inputTitle="Transaction fee %"
+			></app-main-input>
+			<app-main-input
+				inputTitle="Old Password"
+				[control]="$any(form.get('oldPssword'))"
+				inputType="password"
+			></app-main-input>
+			<app-main-input
+				inputTitle="New Password"
+				[control]="$any(form.get('newPssword'))"
+				inputType="password"
+			></app-main-input>
+
+			<app-main-input
+				*ngIf="values.isSuperUser"
+				[control]="$any(form.get('phyudAddress'))"
+				inputTitle="Gift Card ID"
+			></app-main-input>
+
+			<app-main-input
+				*ngIf="values.isSuperUser"
+				[control]="$any(form.get('recoveryPhrase'))"
+				inputTitle="Recovery Phrase"
+			></app-main-input>
+
+			<!-- will not allow the user to change the super user's status. This could cause issues with accessing the super user's account -->
+			<app-main-select-input
+				*ngIf="values.isSuperUser && values.profile.isSuperUser !== true"
+				inputTitle="Status"
+				[options]="statusOptions"
+				[control]="$any(form.get('status'))"
+			></app-main-select-input>
+
+			<app-main-select-input
+				*ngIf="values.isSuperUser"
+				inputTitle="Can cash out"
+				[options]="wholeSaleOptions"
+				[control]="$any(form.get('canCashOut'))"
+			></app-main-select-input>
+
+			<app-main-select-input
+				*ngIf="values.isSuperUser"
+				inputTitle="KYC verified"
+				[options]="wholeSaleOptions"
+				[control]="$any(form.get('kycVerified'))"
+			></app-main-select-input>
+
+			<app-main-select-input
+				*ngIf="values.isSuperUser"
+				inputTitle="Grant wholesale access"
+				[options]="wholeSaleOptions"
+				[control]="$any(form.get('grantWholesaleAccess'))"
+			></app-main-select-input>
+
+			<app-main-select-input
+				*ngIf="values.isSuperUser"
+				inputTitle="Can Receive Gifts"
+				[options]="canReceiveGifts"
+				[control]="$any(form.get('canReceiveGifts'))"
+			></app-main-select-input>
+
+			<button
+				appBounceOnClick
+				bounceOnClickScale="main-button"
+				type="submit"
+				[class.disabled]="!form.valid"
+				class="main-button"
+				(click)="submit()"
+			>
+				Save
+			</button>
+		</form>
+	</div>
+	<app-choose-location-screen
+		*ngIf="showSelectLocationScreen"
+		screenTitle="Location"
+		subtitle="Select your business location."
+		[formGroup]="form.getChildFormGroup('businessLocation')"
+		[canSkip]="false"
+		(onBack)="showSelectLocationScreen = false"
+		(onFinish)="showSelectLocationScreen = false"
+	></app-choose-location-screen>
+	<app-loader *ngIf="isLoading$ | async"></app-loader>
+</ng-container>

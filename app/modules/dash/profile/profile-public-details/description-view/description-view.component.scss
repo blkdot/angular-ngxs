@@ -1,0 +1,13 @@
+@use "~src/styles/variables";
+@use "src/styles/helpers";
+
+:host {
+	display: block;
+	font-weight: 200;
+	font-size: 14px;
+	line-height: 1.6;
+	color: variables.$main-brown-color;
+	> .read-more-button {
+		font-weight: 400;
+	}
+}

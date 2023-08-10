@@ -1,0 +1,17 @@
+<app-main-input-holder [inputTitle]="inputTitle">
+	<ng-content></ng-content>
+
+	<!-- hidden (using css) when ng-content is filled -->
+	<input
+		*ngIf="inputFormControlValue() as formControl"
+		#inputField
+    class="input-field"
+		[type]="inputType"
+	  [placeholder]="inputPlaceholder"
+		[formControl]="formControl"
+	/>
+</app-main-input-holder>
+
+<div *ngIf="control.getErrorMessage() as error" class="error-text">
+	{{ error }}
+</div>

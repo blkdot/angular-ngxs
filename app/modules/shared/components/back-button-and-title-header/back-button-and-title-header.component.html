@@ -1,0 +1,15 @@
+<button
+	appBounceOnClick
+	bounceOnClickScale="small-button"
+	class="back-button"
+	(click)="onBackButtonClicked()"
+>
+	<svg [outerHTML]="svg.icons.leftPointedChevron"></svg>
+</button>
+
+<!-- the visibility of the below elements are controlled via css. check the scss file -->
+<div class="replace-text-holder">
+	<ng-content select=".replace-text"></ng-content>
+</div>
+<h1 class="title-text">{{ title }}</h1>
+<ng-content select=".trailing"></ng-content>

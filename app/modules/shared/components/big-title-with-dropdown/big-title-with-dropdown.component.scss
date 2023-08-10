@@ -1,0 +1,31 @@
+ 
+@use '~src/styles/variables';
+
+:host{
+
+    font-size: 50px;
+    align-items: baseline;
+    display: flex;
+    flex-direction: row;
+
+    > .in-text{
+        color: rgba(variables.$main-brown-color, 0.15);
+        margin-right: 0.2em;
+    }
+
+    > app-main-option-list{
+        flex: 1;
+        > ::ng-deep input{
+            color: variables.$main-brown-color;
+            text-decoration: underline;
+            text-overflow: ellipsis;
+    
+            &::placeholder{
+                text-decoration: underline;
+                color: rgba(variables.$main-brown-color, 0.4);
+            }
+        }
+    }
+
+}
+

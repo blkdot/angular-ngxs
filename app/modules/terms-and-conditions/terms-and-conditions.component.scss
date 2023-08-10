@@ -1,0 +1,18 @@
+@use "src/styles/variables";
+
+:host {
+	display: block;
+	height: 100%;
+	overflow-y: auto;
+	padding-left: 15px;
+	padding-right: 15px;
+
+	> .content {
+		color: variables.$main-brown-color;
+		font-weight: 300;
+		font-size: 16px;
+		ul {
+			margin-left: 20px;
+		}
+	}
+}

@@ -1,0 +1,7 @@
+{{ getTruncatedDescriptionText(descriptionText) }}
+<ng-container *ngIf="descriptionNeedsToBeTruncated(descriptionText)">
+	{{ " " }}
+	<button class="read-more-button" (click)="shouldShowMore = !shouldShowMore">
+		{{ shouldShowMore ? "show less" : "show more" }}
+	</button>
+</ng-container>

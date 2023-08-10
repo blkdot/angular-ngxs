@@ -1,0 +1,19 @@
+@use "src/styles/helpers";
+
+:host {
+	display: block;
+	height: 100%;
+	max-width: 500px;
+	margin: 0 auto;
+	position: relative;
+
+	> app-menu-screen,
+	> app-login {
+		position: absolute;
+		left: 0;
+		top: 0;
+		height: 100%;
+		width: 100%;
+		z-index: 10;
+	}
+}

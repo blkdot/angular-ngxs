@@ -1,0 +1,51 @@
+@use "~src/styles/variables";
+@use "~src/styles/mixins";
+
+:host > .root {
+	height: 100%;
+	overflow-y: auto;
+
+	> .top-section {
+		padding-left: 15px;
+		padding-right: 15px;
+		padding-top: 15px;
+
+		> header {
+			display: grid;
+			grid-auto-flow: column;
+			gap: 10px;
+			justify-content: start;
+			align-items: center;
+			font-size: 50px;
+
+			> .back-arrow {
+				margin-top: -0.25em;
+				> img {
+					width: 16px;
+					height: 16px;
+					object-fit: contain;
+				}
+			}
+			> .about-title {
+				font-family: Cera Pro;
+				color: variables.$main-brown-color;
+			}
+		}
+
+		.description {
+			color: variables.$main-brown-color;
+			font-weight: 300;
+			font-size: 16px;
+		}
+	}
+
+	> .bottom-illustration {
+		margin-top: 10px;
+		width: 100%;
+		max-width: 350px;
+		display: block;
+		object-fit: contain;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}

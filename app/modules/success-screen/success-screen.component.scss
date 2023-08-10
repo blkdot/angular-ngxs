@@ -1,0 +1,39 @@
+@use "~src/styles/variables";
+@use "~src/styles/mixins";
+
+:host > .root {
+	height: 100%;
+	display: grid;
+	grid-template-rows: 1fr auto;
+	font-family: Cera Pro;
+	color: variables.$main-brown-color;
+
+	> .scrolling-container {
+		overflow-y: auto;
+		padding: variables.$side-screen-padding;
+
+		> .top-text-box {
+			> .thanks-title {
+				font-size: 45px;
+				line-height: 1;
+			}
+			> .thanks-description {
+				font-weight: 300;
+				margin-top: 15px;
+			}
+		}
+
+		> img {
+			display: block;
+			width: 100%;
+			margin-top: 15px;
+      position: absolute;
+      z-index: -1;
+      left: 0px;
+		}
+	}
+
+	> footer {
+		padding: 12px variables.$side-screen-padding;
+	}
+}

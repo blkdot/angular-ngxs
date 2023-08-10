@@ -1,0 +1,132 @@
+<ng-container *ngIf="templateAsyncValues$ | async as values">
+	<div class="scroll-view">
+		<app-image-slider-header
+			[imageUrls]="values.profile.photos | s3ImageUrlArray"
+			[noImagesPlaceholder]="imagePlaceholder"
+			[customBackButtonAction]="backButtonClicked.bind(this)"
+		>
+			<div class="header-buttons">
+				<button
+					appBounceOnClick
+					bounceOnClickScale="small-button"
+					class="share-button"
+					(click)="shareLinkPopup.present()"
+				>
+					<svg [outerHTML]="svg.icons.shareIcon"></svg>
+				</button>
+				<a
+					*ngIf="values.canEdit"
+					class="edit-button"
+					appBounceOnClick
+					bounceOnClickScale="small-button"
+					routerLink="/app/profile/edit/{{ values.profile.id }}"
+				>
+					<svg [outerHTML]="svg.icons.editIcon"></svg>
+				</a>
+			</div>
+		</app-image-slider-header>
+
+		<ng-template #imagePlaceholder>
+			<app-large-vendor-placeholder-image></app-large-vendor-placeholder-image>
+		</ng-template>
+
+		<div class="content">
+			<div class="top-title-text">
+				<div class="name">
+					{{ values.profile.displayName || values.profile.fullName }}
+				</div>
+				<div class="username">@{{ values.profile.userName | lowercase }}</div>
+				<div class="stars-view">
+					<ng-container
+						*ngIf="values.profile.reviewCount !== 0; else noReviewsView"
+					>
+						<div class="number-of-stars">
+							{{ values.profile.rating.toFixed(1) }}
+						</div>
+						<div class="stars-container">
+							<svg
+								*ngFor="let icon of getStarSvgIcons(values.profile)"
+								[outerHTML]="icon"
+							></svg>
+						</div>
+						<div class="number-of-reviews">
+							({{ values.profile.reviewCount }})
+						</div>
+					</ng-container>
+					<ng-template #noReviewsView>
+						<div class="number-of-stars">No reviews yet</div>
+					</ng-template>
+				</div>
+			</div>
+
+			<!-- <app-hashtag-chip-list-view
+				[chipItems]="[values.profile.city?.toLowerCase()]"
+			></app-hashtag-chip-list-view> -->
+
+			<div class="vendor-holder" *ngIf="values.currentUser != null">
+				<app-person-contact-buttons
+					[profile]="values.profile"
+					buttonsConfig="long"
+				></app-person-contact-buttons>
+			</div>
+			<app-description-view
+				*ngIf="values.profileDescription as description"
+				[descriptionText]="description"
+			>
+				{{ description }}
+			</app-description-view>
+		</div>
+
+		<ng-container *ngFor="let section of values.productSections">
+			<app-screen-section-holder
+				*ngIf="section.products?.length >= 1"
+				[sectionTitle]="section.title"
+				[allHref]="section.allHref"
+				[allQueryParams]="section.allQueryParams"
+			>
+				<app-horizontal-products-scroll-view [products]="section.products">
+				</app-horizontal-products-scroll-view>
+			</app-screen-section-holder>
+		</ng-container>
+
+		<app-screen-section-holder
+			*ngIf="values.eventsIParticipateIn.length > 0"
+			sectionTitle="Featured at"
+			allHref="/app/events/vendor/{{ values.profile.id }}"
+		>
+			<app-event-items-scroll-view
+				[events]="values.eventsIParticipateIn"
+			></app-event-items-scroll-view>
+		</app-screen-section-holder>
+
+		<app-screen-section-holder
+			*ngIf="values.eventsIHost?.length >= 1"
+			sectionTitle="I host"
+			allHref="/app/events/vendor/{{ values.profile.id }}"
+		>
+			<app-event-items-scroll-view
+				[events]="values.eventsIHost"
+				eventType="master"
+			></app-event-items-scroll-view>
+		</app-screen-section-holder>
+
+		<div class="edit-button-holder" *ngIf="values.canEdit">
+			<button
+				class="main-button_brown"
+				routerLink="/app/profile/edit/{{ values.profile.id }}"
+				appBounceOnClick
+				bounceOnClickScale="main-button"
+			>
+				Edit
+			</button>
+		</div>
+	</div>
+
+	<app-share-link-popup
+		#shareLinkPopup
+		[shareUrl]="values.profileShareUrl"
+		linkType="page"
+	></app-share-link-popup>
+</ng-container>
+
+<app-loader *ngIf="isLoading$ | async"></app-loader>

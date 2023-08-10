@@ -1,0 +1,16 @@
+<app-pop-in-screen #popInScreen (onDismiss)="screenDidDismiss.emit()">
+	<div class="top-icon-holder">
+		<svg [outerHTML]="svg.icons.cutOffTimePassedIcon"></svg>
+	</div>
+	<div class="title">{{ titleText }}</div>
+	<div class="subtitle">{{ descriptionText }}</div>
+	<button
+		class="return-to-market"
+		appBounceOnClick
+		[bounceOnClickScale]="0.9"
+		routerLink="/app/products"
+		(click)="popInScreen?.dismiss()"
+	>
+		Return to market
+	</button>
+</app-pop-in-screen>
